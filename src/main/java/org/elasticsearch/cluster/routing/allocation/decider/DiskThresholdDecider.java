@@ -187,7 +187,7 @@ public class DiskThresholdDecider extends AllocationDecider {
     }
 
     public DiskThresholdDecider(Settings settings) {
-        // It's okay the Client is null here, because the empty cluster info
+        // It's okay the TransportClientDebug is null here, because the empty cluster info
         // service will never actually call the listener where the client is
         // needed. Also this constructor is only used for tests
         this(settings, new NodeSettingsService(settings), ClusterInfoService.EMPTY, null);

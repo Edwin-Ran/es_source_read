@@ -197,6 +197,10 @@ public class TransportClientNodesService extends AbstractComponent {
         ensureNodesAreAvailable(nodes);
         int index = getNodeNumber();
         RetryListener<Response> retryListener = new RetryListener<>(callback, listener, nodes, index);
+
+        /**
+         * 负载均衡
+         */
         DiscoveryNode node = nodes.get((index) % nodes.size());
         try {
             callback.doWithNode(node, retryListener);
@@ -314,12 +318,20 @@ public class TransportClientNodesService extends AbstractComponent {
 
     }
 
+
+    /**
+     *  定期更新节点状态，剔除坏节点
+     */
     class ScheduledNodeSampler implements Runnable {
         @Override
         public void run() {
             try {
                 nodesSampler.sample();
                 if (!closed) {
+
+                    /**
+                     * 这行代码，每次delay time执行后，会把this继续加到threadpool中，所以能够一直间隔delay time执行，类似timer
+                     */
                     nodesSamplerFuture = threadPool.schedule(nodesSamplerInterval, ThreadPool.Names.GENERIC, this);
                 }
             } catch (Exception e) {
@@ -417,6 +429,10 @@ public class TransportClientNodesService extends AbstractComponent {
                                     return;
                                 }
                             }
+
+                            /**
+                             * 调用TransportService.sendRequest() ,实际调用的是Transport实现类NetttyTransport.sendRequest()
+                             */
                             transportService.sendRequest(listedNode, ClusterStateAction.NAME,
                                     headers.applyTo(Requests.clusterStateRequest().clear().nodes(true).local(true)),
                                     TransportRequestOptions.options().withType(TransportRequestOptions.Type.STATE).withTimeout(pingTimeout),

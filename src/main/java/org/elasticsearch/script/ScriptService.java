@@ -352,7 +352,7 @@ public class ScriptService extends AbstractComponent implements Closeable {
 
         if(scriptType == ScriptType.INDEXED) {
             if (client == null) {
-                throw new ElasticsearchIllegalArgumentException("Got an indexed script with no Client registered.");
+                throw new ElasticsearchIllegalArgumentException("Got an indexed script with no TransportClientDebug registered.");
             }
 
             final IndexedScript indexedScript = new IndexedScript(lang, script);

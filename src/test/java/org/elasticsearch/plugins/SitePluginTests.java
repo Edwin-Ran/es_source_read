@@ -70,7 +70,7 @@ public class SitePluginTests extends ElasticsearchIntegrationTest {
 
     @Test
     public void testRedirectSitePlugin() throws Exception {
-        // We use an HTTP Client to test redirection
+        // We use an HTTP TransportClientDebug to test redirection
         HttpResponse response = httpClient().method("GET").path("/_plugin/dummy").execute();
         assertThat(response.getStatusCode(), equalTo(RestStatus.MOVED_PERMANENTLY.getStatus()));
         assertThat(response.getBody(), containsString("/_plugin/dummy/"));

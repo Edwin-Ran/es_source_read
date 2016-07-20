@@ -714,6 +714,10 @@ public class ImmutableSettings implements Settings {
             for (int i = 0; i < settings.length; i++) {
                 put(settings[i++].toString(), settings[i].toString());
             }
+
+            /**
+             * 链式
+             */
             return this;
         }
 

@@ -46,7 +46,7 @@ public class NodesStatsBasicBackwardsCompat extends ElasticsearchBackwardsCompat
                 .put("client.transport.ignore_cluster_name", true)
                 .put("node.name", "transport_client_" + getTestName()).build();
 
-        // We explicitly connect to each node with a custom TransportClient
+        // We explicitly connect to each node with a custom TransportClientDebug
         for (NodeInfo n : nodesInfo.getNodes()) {
             TransportClient tc = new TransportClient(settings).addTransportAddress(n.getNode().address());
             // Just verify that the NS can be sent and serialized/deserialized between nodes with basic indices
@@ -65,7 +65,7 @@ public class NodesStatsBasicBackwardsCompat extends ElasticsearchBackwardsCompat
                 .put("node.name", "transport_client_" + getTestName())
                 .put("client.transport.ignore_cluster_name", true).build();
 
-        // We explicitly connect to each node with a custom TransportClient
+        // We explicitly connect to each node with a custom TransportClientDebug
         for (NodeInfo n : nodesInfo.getNodes()) {
             TransportClient tc = new TransportClient(settings).addTransportAddress(n.getNode().address());
 

@@ -25,7 +25,7 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.transport.TransportMessage;
 
 /**
- * Client request headers picked up from the client settings. Applied to every
+ * TransportClientDebug request headers picked up from the client settings. Applied to every
  * request sent by the client (both transport and node clients)
  */
 public class Headers {

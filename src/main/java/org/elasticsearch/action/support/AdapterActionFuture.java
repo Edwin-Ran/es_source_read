@@ -42,6 +42,9 @@ public abstract class AdapterActionFuture<T, L> extends BaseFuture<T> implements
     @Override
     public T actionGet() throws ElasticsearchException {
         try {
+            //Thread.sleep(5000);
+            //System.out.println("get");
+
             return get();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
