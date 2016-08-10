@@ -138,6 +138,12 @@ public class DiscoveryService extends AbstractLifecycleComponent<DiscoveryServic
         }
     }
 
+
+    /**
+     * 随机生成nodeid
+     * @param settings
+     * @return
+     */
     public static String generateNodeId(Settings settings) {
         String seed = settings.get("discovery.id.seed");
         if (seed != null) {

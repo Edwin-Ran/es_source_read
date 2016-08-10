@@ -337,7 +337,8 @@ public abstract class TransportShardReplicationOperationAction<Request extends S
             }
         }
 
-        public void start() {
+        public void
+        start() {
             this.observer = new ClusterStateObserver(clusterService, internalRequest.request().timeout(), logger);
             doStart();
         }

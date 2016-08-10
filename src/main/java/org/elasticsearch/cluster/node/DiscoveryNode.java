@@ -372,4 +372,8 @@ public class DiscoveryNode implements Streamable, Serializable {
         }
         return sb.toString();
     }
+
+    public static void main (String[] args) {
+        System.out.println("101273y8hsodsd.".intern());
+    }
 }

@@ -103,6 +103,12 @@ public class ElectMasterService extends AbstractComponent {
      * Elects a new master out of the possible nodes, returning it. Returns <tt>null</tt>
      * if no master has been elected.
      */
+
+    /**
+     * 选举master节点
+     * @param nodes
+     * @return
+     */
     public DiscoveryNode electMaster(Iterable<DiscoveryNode> nodes) {
         List<DiscoveryNode> sortedNodes = sortedMasterNodes(nodes);
         if (sortedNodes == null || sortedNodes.isEmpty()) {
@@ -140,4 +146,10 @@ public class ElectMasterService extends AbstractComponent {
             return o1.id().compareTo(o2.id());
         }
     }
+
+    public static void main(String[] args) {
+
+        System.out.println("10.10.".compareTo("11.2"));
+    }
+
 }

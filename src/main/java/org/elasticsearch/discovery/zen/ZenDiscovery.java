@@ -207,10 +207,25 @@ public class ZenDiscovery extends AbstractLifecycleComponent<Discovery> implemen
 
     @Override
     protected void doStart() throws ElasticsearchException {
+        /**
+         * 设置本地节点
+         */
         nodesFD.setLocalNode(clusterService.localNode());
+
+        /**
+         * 开启加入集群任务(新线程后台执行),只是将flag设为true，具体的执行在后面
+         */
         joinThreadControl.start();
+
+        /**
+         * 通信,查看可用节点
+         */
         pingService.start();
 
+
+        /**
+         * 执行加入集群任务
+         */
         // start the join thread from a cluster state update. See {@link JoinThreadControl} for details.
         clusterService.submitStateUpdateTask("initial_join", new ClusterStateNonMasterUpdateTask() {
             @Override
@@ -938,6 +953,11 @@ public class ZenDiscovery extends AbstractLifecycleComponent<Discovery> implemen
         }
     }
 
+
+    /**
+     * 寻找master节点
+     * @return
+     */
     private DiscoveryNode findMaster() {
         logger.trace("starting to ping");
         ZenPing.PingResponse[] fullPingResponses = pingService.pingAndWait(pingTimeout);
@@ -986,6 +1006,9 @@ public class ZenDiscovery extends AbstractLifecycleComponent<Discovery> implemen
         List<DiscoveryNode> pingMasters = newArrayList();
         for (ZenPing.PingResponse pingResponse : pingResponses) {
             if (pingResponse.master() != null) {
+                /**
+                 * 如果自己为空，不能简单认为自己为master，必须从其他节点处验证自己为master
+                 */
                 // We can't include the local node in pingMasters list, otherwise we may up electing ourselves without
                 // any check / verifications from other nodes in ZenDiscover#innerJoinCluster()
                 if (!localNode.equals(pingResponse.master())) {

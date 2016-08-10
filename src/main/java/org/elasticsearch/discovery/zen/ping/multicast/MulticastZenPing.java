@@ -189,6 +189,9 @@ public class MulticastZenPing extends AbstractLifecycleComponent<ZenPing> implem
             sendPingRequest(id);
             // try and send another ping request halfway through (just in case someone woke up during it...)
             // this can be a good trade-off to nailing the initial lookup or un-delivered messages
+            /**
+             * ping 3次，以防机器在第一次ping中起来,unicast一样
+             */
             threadPool.schedule(TimeValue.timeValueMillis(timeout.millis() / 2), ThreadPool.Names.GENERIC, new Runnable() {
                 public void run() {
                     try {

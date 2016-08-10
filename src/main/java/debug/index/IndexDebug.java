@@ -1,11 +1,8 @@
-package debug.client;
+package debug.index;
 
-import org.elasticsearch.action.ActionResponse;
 import org.elasticsearch.action.ListenableActionFuture;
-import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.percolate.TransportShardMultiPercolateAction;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
@@ -16,9 +13,9 @@ import java.util.Date;
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 /**
- * Created by haoranchen on 16-7-1.
+ * Created by haoranchen on 16-8-2.
  */
-public class TransportClientDebug {
+public class IndexDebug {
     public static void main(String[] args) throws Exception {
         ImmutableSettings.Builder builder = ImmutableSettings.settingsBuilder();
         builder.put("cluster.name", "elasticsearch");
@@ -26,32 +23,6 @@ public class TransportClientDebug {
 
         TransportClient client = new TransportClient(builder.build());
         client.addTransportAddresses(new InetSocketTransportAddress("10.2.9.38", 9300));
-
-        /**
-         * 已添加的节点
-         */
-        System.out.println(client.listedNodes());
-
-
-        /**
-         * 所有已链接的节点
-         */
-        System.out.println(client.connectedNodes());
-
-
-        Thread.sleep(20000);
-
-
-        /**
-         * 已添加的节点
-         */
-        System.out.println(client.listedNodes());
-
-
-        /**
-         * 所有已链接的节点
-         */
-        System.out.println(client.connectedNodes());
 
         /**
          * JSON串
