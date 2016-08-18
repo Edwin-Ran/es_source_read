@@ -218,7 +218,7 @@ public class ZenDiscovery extends AbstractLifecycleComponent<Discovery> implemen
         joinThreadControl.start();
 
         /**
-         * 通信,查看可用节点
+         * 通信,查看可用节点(Multicast Unicast)
          */
         pingService.start();
 
@@ -1006,9 +1006,6 @@ public class ZenDiscovery extends AbstractLifecycleComponent<Discovery> implemen
         List<DiscoveryNode> pingMasters = newArrayList();
         for (ZenPing.PingResponse pingResponse : pingResponses) {
             if (pingResponse.master() != null) {
-                /**
-                 * 如果自己为空，不能简单认为自己为master，必须从其他节点处验证自己为master
-                 */
                 // We can't include the local node in pingMasters list, otherwise we may up electing ourselves without
                 // any check / verifications from other nodes in ZenDiscover#innerJoinCluster()
                 if (!localNode.equals(pingResponse.master())) {

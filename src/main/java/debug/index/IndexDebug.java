@@ -29,40 +29,69 @@ public class IndexDebug {
          */
         XContentBuilder xContentBuilder = jsonBuilder()
                 .startObject()
-                .field("user", "haoranchen")
-                .field("postDate", new Date())
-                .field("message", "trying out Elasticsearch")
-                .field("array",new String[]{"a","b"})
+                .field("title", "你好")
+                .endObject();
+
+        /**
+         * JSON串
+         */
+        XContentBuilder xContentBuilder2 = jsonBuilder()
+                .startObject()
+                .field("title", "Hello")
+                .endObject();
+
+        /**
+         * JSON串
+         */
+        XContentBuilder xContentBuilder3 = jsonBuilder()
+                .startObject()
+                .field("title", "World")
+                .endObject();
+
+        /**
+         * JSON串
+         */
+        XContentBuilder xContentBuilder4 = jsonBuilder()
+                .startObject()
+                .field("title", "你好啊")
+                .endObject();
+
+        /**
+         * JSON串
+         */
+        XContentBuilder xContentBuilder5 = jsonBuilder()
+                .startObject()
+                .field("title", "你好你好你好")
                 .endObject();
 
 
         /**
          * 索引
          */
-        IndexRequestBuilder indexRequestBuilder = client.prepareIndex("debug", "debug", "1");
-
+        IndexRequestBuilder indexRequestBuilder = client.prepareIndex("blog", "title", "1");
         indexRequestBuilder.setSource(xContentBuilder);
-
         ListenableActionFuture<IndexResponse> future = indexRequestBuilder.execute();
-
-
         IndexResponse response = future.actionGet();
-        System.out.println("test");
 
-        /**
-         * 再次索引
-         */
-        XContentBuilder xContentBuilder2 = jsonBuilder()
-                .startObject()
-                .field("user", "xuxiaotong")
-                .field("postDate", new Date())
-                .field("message", "trying out Elasticsearch")
-                .field("array",new String[]{"a","b"})
-                .endObject();
 
-        IndexRequestBuilder indexRequestBuilder2 = client.prepareIndex("debug", "debug", "1");
-        indexRequestBuilder2.setSource(xContentBuilder);
-        ListenableActionFuture<IndexResponse> future2 = indexRequestBuilder.execute();
+        IndexRequestBuilder indexRequestBuilder2 = client.prepareIndex("blog", "title", "2");
+        indexRequestBuilder2.setSource(xContentBuilder2);
+        ListenableActionFuture<IndexResponse> future2 = indexRequestBuilder2.execute();
         IndexResponse response2 = future2.actionGet();
+
+        IndexRequestBuilder indexRequestBuilder3 = client.prepareIndex("blog", "title", "3");
+        indexRequestBuilder3.setSource(xContentBuilder3);
+        ListenableActionFuture<IndexResponse> future3 = indexRequestBuilder3.execute();
+        IndexResponse response3 = future3.actionGet();
+
+        IndexRequestBuilder indexRequestBuilder4 = client.prepareIndex("blog", "title", "4");
+        indexRequestBuilder4.setSource(xContentBuilder4);
+        ListenableActionFuture<IndexResponse> future4 = indexRequestBuilder4.execute();
+        IndexResponse response4 = future4.actionGet();
+
+        IndexRequestBuilder indexRequestBuilder5 = client.prepareIndex("blog", "title", "5");
+        indexRequestBuilder5.setSource(xContentBuilder5);
+        ListenableActionFuture<IndexResponse> future5 = indexRequestBuilder5.execute();
+        IndexResponse response5 = future5.actionGet();
     }
 }
